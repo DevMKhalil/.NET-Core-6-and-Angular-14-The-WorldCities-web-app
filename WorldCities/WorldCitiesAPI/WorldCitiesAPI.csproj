@@ -4,10 +4,29 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>WorldCitiesAPI</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="6.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.37.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\Cities\Commands\CreateCity\" />
+    <Folder Include="Application\Cities\Queries\" />
+    <Folder Include="Application\Countries\Commands\CreateCountry\" />
+    <Folder Include="Application\Countries\Queries\" />
+    <Folder Include="Data\Source\" />
   </ItemGroup>
 
 </Project>

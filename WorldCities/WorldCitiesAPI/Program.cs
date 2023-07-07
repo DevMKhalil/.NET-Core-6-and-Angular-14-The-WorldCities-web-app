@@ -1,3 +1,8 @@
+using MediatR;
+using OfficeOpenXml;
+using System.Reflection;
+using WorldCitiesAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +11,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddContext(builder.Configuration);
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 var app = builder.Build();
 
