@@ -4,8 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('../home/home.component').then(mod => mod.HomeComponent),
+    loadComponent: () => import('src/app/home/home.component').then(mod => mod.HomeComponent),
     pathMatch: 'full'
+  }
+  ,
+  {
+    path: 'cities',
+    loadComponent: () => import('src/app/cities/cities.component').then(mod => mod.CitiesComponent)
   }
 ];
 
