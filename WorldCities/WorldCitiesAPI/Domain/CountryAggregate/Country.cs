@@ -53,5 +53,15 @@ namespace WorldCitiesAPI.Domain.CountryAggregate
                 ISO3 = iso3
             });
         }
+
+        public Result<Country> UpdateCountry(string name, string iso2, string iso3)
+        {
+            return Result.Success(new Country
+            {
+                Name = name,
+                ISO2 = iso2,
+                ISO3 = iso3
+            });
+        }
     }
 }

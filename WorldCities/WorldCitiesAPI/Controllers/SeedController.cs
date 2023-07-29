@@ -1,18 +1,13 @@
-﻿using System.Security;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using OfficeOpenXml;
 using WorldCitiesAPI.Application;
 using WorldCitiesAPI.Application.Import.Commands.ImportFromExcel;
-using WorldCitiesAPI.Domain.CityAggregate;
-using WorldCitiesAPI.Domain.CountryAggregate;
 
 namespace WorldCitiesAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class SeedController : Controller
+    public class SeedController : ControllerBase
     {
         private readonly IApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;

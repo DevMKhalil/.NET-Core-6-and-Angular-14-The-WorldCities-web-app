@@ -65,5 +65,19 @@ namespace WorldCitiesAPI.Domain.CityAggregate
                 CountryId = maybeCountry.Value.Id
             });
         }
+
+        public Result<City> UpdateCity(string name, decimal lat, decimal lon, Maybe<Country> maybeCountry)
+        {
+            if (maybeCountry.HasNoValue)
+                return Result.Failure<City>("Country Not Found");
+
+            return Result.Success(new City
+            {
+                Name = name,
+                Lat = lat,
+                Lon = lon,
+                CountryId = maybeCountry.Value.Id
+            });
+        }
     }
 }

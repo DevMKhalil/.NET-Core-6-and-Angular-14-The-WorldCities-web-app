@@ -14,7 +14,7 @@ namespace WorldCitiesAPI.Data.EFConfiguration
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.Lat).HasColumnType("decimal(7,4)");
             builder.Property(x => x.Lon).HasColumnType("decimal(7,4)");
-            builder.HasOne(x => x.Country).WithMany(y => y.Cities).HasForeignKey(x => x.CountryId);
+            builder.HasOne(x => x.Country).WithMany(y => y.Cities).HasForeignKey(x => x.CountryId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
