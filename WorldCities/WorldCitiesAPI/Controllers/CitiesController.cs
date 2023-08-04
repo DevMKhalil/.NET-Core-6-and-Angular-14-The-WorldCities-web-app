@@ -26,10 +26,13 @@ namespace WorldCitiesAPI.Controllers
         }
 
         // GET: api/Cities
+        // GET: api/Cities/?pageIndex=0&pageSize=10
+        // GET: api/Cities/?pageIndex=0&pageSize=10&sortColumn=name& 
+        //  sortOrder=asc
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CityDto>>> GetCities()
+        public async Task<ActionResult<ApiResult<CityDto>>> GetCities([FromQuery] GetCitiesQuery citiesQuery)
         {
-            var result = await _mediator.Send(new GetCitiesQuery());
+            var result = await _mediator.Send(citiesQuery);
 
             return result;
         }

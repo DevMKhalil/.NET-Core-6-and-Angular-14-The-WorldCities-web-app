@@ -3,15 +3,21 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
+using WorldCitiesAPI.Common.Helper;
+using WorldCitiesAPI.Data;
 using WorldCitiesAPI.Domain.CityAggregate;
 
 namespace WorldCitiesAPI.Application.Cities.Queries.GetCities
 {
-    public class GetCitiesQuery : IRequest<List<CityDto>>
+    public class GetCitiesQuery : IRequest<ApiResult<CityDto>>
     {
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; } = SharedConst.defaultPageSize;
+        public string? SortColumn { get; set; } = null;
+        public string? SortOrder { get; set; } = null;
     }
 
-    public class GetCitiesQueryHandler : IRequestHandler<GetCitiesQuery, List<CityDto>>
+    public class GetCitiesQueryHandler : IRequestHandler<GetCitiesQuery, ApiResult<CityDto>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -20,10 +26,19 @@ namespace WorldCitiesAPI.Application.Cities.Queries.GetCities
             _context = context;
             _mapper = mapper;
         }
-        public async Task<List<CityDto>> Handle(GetCitiesQuery request, CancellationToken cancellationToken)
+        public async Task<ApiResult<CityDto>> Handle(GetCitiesQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Cities
-                .ProjectTo<CityDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var query = _context.Cities
+                .AsNoTracking()
+                .ProjectTo<CityDto>(_mapper.ConfigurationProvider);
+
+            return await ApiResult<CityDto>
+                .CreateAsync(
+                query,
+                request.PageIndex,
+                request.PageSize,
+                request.SortColumn,
+                request.SortOrder);
         }
     }
 }
