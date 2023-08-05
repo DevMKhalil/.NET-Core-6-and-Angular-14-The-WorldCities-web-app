@@ -12,6 +12,11 @@ const routes: Routes = [
     path: 'cities',
     loadComponent: () => import('src/app/cities/cities.component').then(mod => mod.CitiesComponent)
   }
+  ,
+  {
+    path: 'countries',
+    loadComponent: () => import('src/app/countries/countries.component').then(mod => mod.CountriesComponent)
+  }
 ];
 
 @NgModule({

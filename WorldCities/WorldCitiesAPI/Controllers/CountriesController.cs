@@ -33,9 +33,9 @@ namespace WorldCitiesAPI.Controllers
 
         // GET: api/Countries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
+        public async Task<ActionResult<ApiResult<CountryDto>>> GetCountries([FromQuery] GetCountriesQuery getCountries)
         {
-            var result = await _mediator.Send(new GetCountriesQuery());
+            var result = await _mediator.Send(getCountries);
 
             return result;
         }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Text.Json.Serialization;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
 using WorldCitiesAPI.Common.Mapping;
 using WorldCitiesAPI.Domain.CityAggregate;
@@ -10,7 +11,9 @@ namespace WorldCitiesAPI.Application.Countries.Queries.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [JsonPropertyName("iso2")]
         public string ISO2 { get; set; }
+        [JsonPropertyName("iso3")]
         public string ISO3 { get; set; }
 
         public void Mapping(Profile profile)
