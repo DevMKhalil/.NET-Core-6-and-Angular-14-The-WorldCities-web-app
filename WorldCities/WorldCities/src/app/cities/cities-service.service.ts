@@ -9,14 +9,24 @@ import { ApiResult } from 'src/app/common/ApiResult';
 })
 export class CitiesServiceService {
   
-  getCities(pageIndex: number, pageSize: number, sortColumn: string, sortOrder:string) {
+  getCities(pageIndex: number,
+    pageSize: number,
+    sortColumn: string,
+    sortOrder: string,
+    filterColumn: string,
+    filterQuery?: string) {
     var url = environment.baseUrl + 'api/Cities';
 
     var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
       .set("pageSize", pageSize.toString())
       .set("sortColumn", sortColumn)
-      .set("sortOrder", sortOrder);
+      .set("sortOrder", sortOrder)
+
+    if (filterQuery)
+        params = params
+        .set("filterColumn", filterColumn)
+        .set("filterQuery", filterQuery);
 
     return this.http.get<ApiResult<City>>(url, { params });
   }

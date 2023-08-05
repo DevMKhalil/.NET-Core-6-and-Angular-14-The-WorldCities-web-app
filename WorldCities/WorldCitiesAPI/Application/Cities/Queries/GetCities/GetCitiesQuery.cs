@@ -15,6 +15,8 @@ namespace WorldCitiesAPI.Application.Cities.Queries.GetCities
         public int PageSize { get; set; } = SharedConst.defaultPageSize;
         public string? SortColumn { get; set; } = null;
         public string? SortOrder { get; set; } = null;
+        public string? FilterColumn { get; set; } = null;
+        public string? FilterQuery { get; set; } = null;
     }
 
     public class GetCitiesQueryHandler : IRequestHandler<GetCitiesQuery, ApiResult<CityDto>>
@@ -38,7 +40,9 @@ namespace WorldCitiesAPI.Application.Cities.Queries.GetCities
                 request.PageIndex,
                 request.PageSize,
                 request.SortColumn,
-                request.SortOrder);
+                request.SortOrder,
+                request.FilterColumn,
+                request.FilterQuery);
         }
     }
 }
