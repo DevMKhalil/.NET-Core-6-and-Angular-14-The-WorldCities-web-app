@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { City } from 'src/app/cities/city';
+//import { Country } from 'src/app/countries/country';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ApiResult } from 'src/app/common/ApiResult';
@@ -7,15 +7,17 @@ import { ApiResult } from 'src/app/common/ApiResult';
 @Injectable({
   providedIn: 'root'
 })
-export class CitiesServiceService {
-  
-  getCities(pageIndex: number,
+export class SharedService<T> {
+
+  getEntity(
+    apiName: string,
+    pageIndex: number,
     pageSize: number,
     sortColumn: string,
     sortOrder: string,
     filterColumn: string,
     filterQuery?: string) {
-    var url = environment.baseUrl + 'api/Cities';
+    var url = environment.baseUrl + 'api/' + apiName;
 
     var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
@@ -24,11 +26,11 @@ export class CitiesServiceService {
       .set("sortOrder", sortOrder)
 
     if (filterQuery)
-        params = params
+      params = params
         .set("filterColumn", filterColumn)
         .set("filterQuery", filterQuery);
 
-    return this.http.get<ApiResult<City>>(url, { params });
+    return this.http.get<ApiResult<T>>(url, { params });
   }
 
   constructor(private http: HttpClient) { }

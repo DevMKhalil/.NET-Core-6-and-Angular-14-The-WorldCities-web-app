@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { City } from 'src/app/cities/city';
 import { Subscription } from 'rxjs';
-import { CitiesServiceService } from 'src/app/cities/cities-service.service';
+import { CitiesService } from 'src/app/cities/cities.service';
 import { StyleMaterialModule } from 'src/app/style-material/style-material.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -72,5 +72,5 @@ export class CitiesComponent implements OnInit, OnDestroy {
     this.citySubscription.unsubscribe();
   }
 
-  constructor(private cityService: CitiesServiceService) { }
+  constructor(private cityService: CitiesService) { }
 }

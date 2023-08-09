@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Country } from 'src/app/countries/country';
+import { City } from 'src/app/cities/city';
 import { SharedService } from 'src/app/common/shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountriesService {
+export class CitiesService {
 
-  apiName: string = 'Countries';
+  apiName: string = 'Cities';
 
-  getcountries(
-    pageIndex: number,
+  getCities(pageIndex: number,
     pageSize: number,
     sortColumn: string,
     sortOrder: string,
@@ -26,5 +25,5 @@ export class CountriesService {
       filterQuery);
   }
 
-  constructor(private sharedService: SharedService<Country>) { }
+  constructor(private sharedService: SharedService<City>) { }
 }
