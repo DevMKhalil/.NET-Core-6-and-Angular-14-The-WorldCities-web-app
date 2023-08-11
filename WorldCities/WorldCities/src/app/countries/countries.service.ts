@@ -16,7 +16,7 @@ export class CountriesService {
     sortOrder: string,
     filterColumn: string,
     filterQuery?: string) {
-    return this.sharedService.getEntity(
+    return this.sharedService.getEntityList(
       this.apiName,
       pageIndex,
       pageSize,

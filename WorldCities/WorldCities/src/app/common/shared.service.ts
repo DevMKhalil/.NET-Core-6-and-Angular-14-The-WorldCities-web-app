@@ -9,7 +9,7 @@ import { ApiResult } from 'src/app/common/ApiResult';
 })
 export class SharedService<T> {
 
-  getEntity(
+  getEntityList(
     apiName: string,
     pageIndex: number,
     pageSize: number,
@@ -31,6 +31,18 @@ export class SharedService<T> {
         .set("filterQuery", filterQuery);
 
     return this.http.get<ApiResult<T>>(url, { params });
+  }
+
+  getEntity(apiName: string, id:number) {
+    var url = environment.baseUrl + 'api/' + apiName + '/' + id;
+
+    return this.http.get<T>(url);
+  }
+
+  putEntity(apiName: string,entity: T) {
+    var url = environment.baseUrl + 'api/' + apiName;
+
+    return this.http.put<T>(url, entity);
   }
 
   constructor(private http: HttpClient) { }

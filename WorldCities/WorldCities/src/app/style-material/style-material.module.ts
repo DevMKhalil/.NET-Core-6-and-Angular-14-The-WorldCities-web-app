@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    ReactiveFormsModule
   ],
   exports: [CommonModule, MatButtonModule,
     MatIconModule,
@@ -27,7 +29,8 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    ReactiveFormsModule
   ]
 })
 export class StyleMaterialModule { }

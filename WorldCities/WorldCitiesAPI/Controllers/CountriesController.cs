@@ -54,7 +54,7 @@ namespace WorldCitiesAPI.Controllers
 
         // PUT: api/Countries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutCountry(CountryDto country)
         {
             var putResult = await _mediator.Send(new UpdateCountryCommand

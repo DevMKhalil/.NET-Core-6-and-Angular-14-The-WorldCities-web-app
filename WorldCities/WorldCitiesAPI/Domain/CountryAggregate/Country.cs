@@ -56,12 +56,11 @@ namespace WorldCitiesAPI.Domain.CountryAggregate
 
         public Result<Country> UpdateCountry(string name, string iso2, string iso3)
         {
-            return Result.Success(new Country
-            {
-                Name = name,
-                ISO2 = iso2,
-                ISO3 = iso3
-            });
+            this.Name = name;
+            this.ISO2 = iso2;
+            this.ISO3 = iso3;
+
+            return Result.Success(this);
         }
     }
 }

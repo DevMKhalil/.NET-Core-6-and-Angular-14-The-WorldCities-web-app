@@ -7,13 +7,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ApiResult } from 'src/app/common/ApiResult';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-cities',
   templateUrl: './cities.component.html',
   styleUrls: ['./cities.component.scss'],
-  imports: [StyleMaterialModule]
+  imports: [RouterModule, StyleMaterialModule]
 })
 export class CitiesComponent implements OnInit, OnDestroy {
 
@@ -49,7 +50,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
     const sortCol = (this.sort) ? this.sort.active : this.defaultSortColumn;
     const sortDir = (this.sort) ? this.sort.direction : this.defaultSortOrder;
 
-    this.citySubscription = this.cityService.getCities(
+    this.citySubscription = this.cityService.getCitiesList(
       e.pageIndex,
       e.pageSize,
       sortCol,

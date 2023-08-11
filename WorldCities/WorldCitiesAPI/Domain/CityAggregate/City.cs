@@ -71,13 +71,12 @@ namespace WorldCitiesAPI.Domain.CityAggregate
             if (maybeCountry.HasNoValue)
                 return Result.Failure<City>("Country Not Found");
 
-            return Result.Success(new City
-            {
-                Name = name,
-                Lat = lat,
-                Lon = lon,
-                CountryId = maybeCountry.Value.Id
-            });
+            this.Name = name;
+            this.Lat = lat;
+            this.Lon = lon;
+            this.CountryId = maybeCountry.Value.Id;
+            
+            return Result.Success(this);
         }
     }
 }

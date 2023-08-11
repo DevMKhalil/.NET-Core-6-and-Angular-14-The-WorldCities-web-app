@@ -14,6 +14,11 @@ const routes: Routes = [
   }
   ,
   {
+    path: 'city/:id',
+    loadComponent: () => import('src/app/cities/city-edit/city-edit.component').then(mod => mod.CityEditComponent)
+  }
+  ,
+  {
     path: 'countries',
     loadComponent: () => import('src/app/countries/countries.component').then(mod => mod.CountriesComponent)
   }

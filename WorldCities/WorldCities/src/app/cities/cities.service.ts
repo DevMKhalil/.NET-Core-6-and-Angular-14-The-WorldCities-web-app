@@ -9,13 +9,13 @@ export class CitiesService {
 
   apiName: string = 'Cities';
 
-  getCities(pageIndex: number,
+  getCitiesList(pageIndex: number,
     pageSize: number,
     sortColumn: string,
     sortOrder: string,
     filterColumn: string,
     filterQuery?: string) {
-    return this.sharedService.getEntity(
+    return this.sharedService.getEntityList(
       this.apiName,
       pageIndex,
       pageSize,
@@ -23,6 +23,14 @@ export class CitiesService {
       sortOrder,
       filterColumn,
       filterQuery);
+  }
+
+  getCity(id:number) {
+    return this.sharedService.getEntity(this.apiName, id);
+  }
+
+  putCity(city: City) {
+    return this.sharedService.putEntity(this.apiName, city);
   }
 
   constructor(private sharedService: SharedService<City>) { }
