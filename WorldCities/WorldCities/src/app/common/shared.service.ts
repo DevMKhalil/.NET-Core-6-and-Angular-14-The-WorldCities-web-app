@@ -13,19 +13,22 @@ export class SharedService<T> {
     apiName: string,
     pageIndex: number,
     pageSize: number,
-    sortColumn: string,
-    sortOrder: string,
-    filterColumn: string,
+    sortColumn?: string,
+    sortOrder?: string,
+    filterColumn?: string,
     filterQuery?: string) {
     var url = environment.baseUrl + 'api/' + apiName;
 
     var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
-      .set("pageSize", pageSize.toString())
-      .set("sortColumn", sortColumn)
-      .set("sortOrder", sortOrder)
+      .set("pageSize", pageSize.toString());
 
-    if (filterQuery)
+    if (sortColumn && sortOrder)
+      params = params
+        .set("sortColumn", sortColumn)
+        .set("sortOrder", sortOrder);
+
+    if (filterQuery && filterColumn)
       params = params
         .set("filterColumn", filterColumn)
         .set("filterQuery", filterQuery);
@@ -43,6 +46,12 @@ export class SharedService<T> {
     var url = environment.baseUrl + 'api/' + apiName;
 
     return this.http.put<T>(url, entity);
+  }
+
+  postEntity(apiName: string, entity: T) {
+    var url = environment.baseUrl + 'api/' + apiName;
+
+    return this.http.post<T>(url, entity);
   }
 
   constructor(private http: HttpClient) { }

@@ -12,9 +12,9 @@ export class CountriesService {
   getcountries(
     pageIndex: number,
     pageSize: number,
-    sortColumn: string,
-    sortOrder: string,
-    filterColumn: string,
+    sortColumn?: string,
+    sortOrder?: string,
+    filterColumn?: string,
     filterQuery?: string) {
     return this.sharedService.getEntityList(
       this.apiName,

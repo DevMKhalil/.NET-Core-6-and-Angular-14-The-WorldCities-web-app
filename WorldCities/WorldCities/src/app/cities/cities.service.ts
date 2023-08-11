@@ -33,5 +33,9 @@ export class CitiesService {
     return this.sharedService.putEntity(this.apiName, city);
   }
 
+  postCity(city: City) {
+    return this.sharedService.postEntity(this.apiName, city);
+  }
+
   constructor(private sharedService: SharedService<City>) { }
 }

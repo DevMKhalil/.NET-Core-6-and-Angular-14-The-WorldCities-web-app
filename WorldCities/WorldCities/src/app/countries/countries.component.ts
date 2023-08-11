@@ -15,7 +15,7 @@ import { ApiResult } from 'src/app/common/ApiResult';
   styleUrls: ['./countries.component.scss'],
   imports: [StyleMaterialModule]
 })
-export class CountriesComponent implements OnInit {
+export class CountriesComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = ['id', 'name', 'iso2', 'iso3'];
   public countries!: MatTableDataSource<Country>;
