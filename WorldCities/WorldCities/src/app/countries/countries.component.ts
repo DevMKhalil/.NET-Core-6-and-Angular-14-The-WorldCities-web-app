@@ -7,13 +7,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ApiResult } from 'src/app/common/ApiResult';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true, 
   selector: 'app-countries',
   templateUrl: './countries.component.html',
   styleUrls: ['./countries.component.scss'],
-  imports: [StyleMaterialModule]
+  imports: [RouterModule, StyleMaterialModule]
 })
 export class CountriesComponent implements OnInit, OnDestroy {
 

@@ -1,13 +1,15 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { StyleMaterialModule } from 'src/app/style-material/style-material.module';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { City } from 'src/app/cities/city';
 import { CitiesService } from 'src/app/cities/cities.service';
 import { Subscription } from 'rxjs';
 import { Country } from 'src/app/countries/country';
 import { CountriesService } from 'src/app/countries/countries.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   standalone: true, 
@@ -37,11 +39,11 @@ export class CityEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl(''),
-      lat: new FormControl(''),
-      lon: new FormControl(''),
-      countryId: new FormControl('')
-    });
+      name: new FormControl('', Validators.required),
+      lat: new FormControl('', Validators.required),
+      lon: new FormControl('', Validators.required),
+      countryId: new FormControl('', Validators.required)
+    }, null, this.isDupeCity());
 
     this.loadData();
   }
@@ -80,7 +82,25 @@ export class CityEditComponent implements OnInit, OnDestroy {
       }, error => console.error(error));
   }
 
+  isDupeCity(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+      var city = <City>{};
+      city.id = (this.id) ? this.id : 0;
+      city.name = this.form.controls['name'].value;
+      city.lat = +this.form.controls['lat'].value;
+      city.lon = +this.form.controls['lon'].value;
+      city.countryId = +this.form.controls['countryId'].value;
+      return this.cityService.isDuplicatedCity(city)
+        .pipe(map(result => {
+          return (result ? { isDupeCity: true } : null);
+      }));
+    }
+  }
+
   onSubmit() {
+    if (!this.form.valid)
+      return;
+
     var city = (this.id) ? this.city : <City>{};
     if (city) {
       city.name = this.form.controls['name'].value;

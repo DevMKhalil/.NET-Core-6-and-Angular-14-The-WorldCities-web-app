@@ -9,6 +9,7 @@ using WorldCitiesAPI.Application.Cities.Commands.UpdateCity;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
 using WorldCitiesAPI.Application.Cities.Queries.GetCities;
 using WorldCitiesAPI.Application.Cities.Queries.GetCityById;
+using WorldCitiesAPI.Application.Cities.Queries.IsDuplicatedCity;
 using WorldCitiesAPI.Data;
 using WorldCitiesAPI.Domain.CityAggregate;
 
@@ -98,6 +99,16 @@ namespace WorldCitiesAPI.Controllers
                 return BadRequest(deleteResult.Error);
 
             return NoContent();
+        }
+
+
+        [HttpGet]
+        [Route("IsDupeCity")]
+        public async Task<ActionResult<bool>> IsDupeCity([FromQuery]IsDuplicatedCityQuery city)
+        {
+            var result = await _mediator.Send(city);
+
+            return Ok(result);
         }
     }
 }

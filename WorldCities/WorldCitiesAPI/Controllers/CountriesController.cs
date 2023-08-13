@@ -8,12 +8,14 @@ using WorldCitiesAPI.Application.Cities.Commands.UpdateCity;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
 using WorldCitiesAPI.Application.Cities.Queries.GetCities;
 using WorldCitiesAPI.Application.Cities.Queries.GetCityById;
+using WorldCitiesAPI.Application.Cities.Queries.IsDuplicatedCity;
 using WorldCitiesAPI.Application.Countries.Commands.CreateCountry;
 using WorldCitiesAPI.Application.Countries.Commands.DeleteCountry;
 using WorldCitiesAPI.Application.Countries.Commands.UpdateCountry;
 using WorldCitiesAPI.Application.Countries.Queries.Dtos;
 using WorldCitiesAPI.Application.Countries.Queries.GetCountries;
 using WorldCitiesAPI.Application.Countries.Queries.GetCountryById;
+using WorldCitiesAPI.Application.Countries.Queries.IsDuplicatedField;
 using WorldCitiesAPI.Data;
 using WorldCitiesAPI.Domain.CityAggregate;
 using WorldCitiesAPI.Domain.CountryAggregate;
@@ -99,6 +101,16 @@ namespace WorldCitiesAPI.Controllers
                 return BadRequest(deleteResult.Error);
 
             return NoContent();
+        }
+
+
+        [HttpGet]
+        [Route("IsDupeField")]
+        public async Task<ActionResult<bool>> IsDupeField([FromQuery] IsDuplicatedFieldQuery country)
+        {
+            var result = await _mediator.Send(country);
+
+            return Ok(result);
         }
     }
 }

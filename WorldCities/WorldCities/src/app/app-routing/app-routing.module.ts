@@ -27,6 +27,16 @@ const routes: Routes = [
     path: 'countries',
     loadComponent: () => import('src/app/countries/countries.component').then(mod => mod.CountriesComponent)
   }
+  ,
+  {
+    path: 'country/:id',
+    loadComponent: () => import('src/app/countries/country-edit/country-edit.component').then(mod => mod.CountryEditComponent)
+  }
+  ,
+  {
+    path: 'country',
+    loadComponent: () => import('src/app/countries/country-edit/country-edit.component').then(mod => mod.CountryEditComponent)
+  }
 ];
 
 @NgModule({

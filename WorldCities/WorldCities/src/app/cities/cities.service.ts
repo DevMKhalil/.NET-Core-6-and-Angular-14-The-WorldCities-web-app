@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { City } from 'src/app/cities/city';
 import { SharedService } from 'src/app/common/shared.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +39,18 @@ export class CitiesService {
     return this.sharedService.postEntity(this.apiName, city);
   }
 
-  constructor(private sharedService: SharedService<City>) { }
+  isDuplicatedCity(city: City) {
+    var url = environment.baseUrl + 'api/Cities/IsDupeCity';
+
+    var params = new HttpParams()
+      .set("id", city.id.toString())
+      .set("countryId", city.countryId.toString())
+      .set("lat", city.lat.toString())
+      .set("lon", city.lon.toString())
+      .set("name", city.name)
+
+    return this.http.get<boolean>(url, { params });
+  }
+
+  constructor(private sharedService: SharedService<City>, private http: HttpClient) { }
 }
