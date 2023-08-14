@@ -10,12 +10,12 @@
   Add a new City
 </button>
 <mat-form-field
-       [hidden]="!cities">
+  [hidden]="!cities">
   <input
-      matInput
-      #filter
-      (keyup)="loadData(filter.value)"
-      placeholder="Filter by name (or part of it)...">
+    matInput
+    #filter
+    (keyup)="onFilterTextChanged(filter.value)"
+    placeholder="Filter by name (or part of it)...">
 </mat-form-field>
 <table mat-table
        matSort

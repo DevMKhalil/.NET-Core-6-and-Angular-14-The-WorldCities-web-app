@@ -10,9 +10,13 @@
     Add a new Country
 </button>
 
-<mat-form-field [hidden]="!countries">
-  <input matInput #filter (keyup)="loadData(filter.value)"
-         placeholder="Filter by name (or part of it)...">
+<mat-form-field
+  [hidden]="!countries">
+  <input
+    matInput
+    #filter
+    (keyup)="onFilterTextChanged(filter.value)"
+    placeholder="Filter by name (or part of it)...">
 </mat-form-field>
 
 <table mat-table [dataSource]="countries"
