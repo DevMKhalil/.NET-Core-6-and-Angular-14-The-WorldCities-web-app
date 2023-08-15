@@ -44,7 +44,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
   // debounce filter text changes
   onFilterTextChanged(filterText: string) {
     if (this.filterTextChanged.observers.length === 0) {
-      this.filterTextChanged
+      this.citySubscription = this.filterTextChanged
         .pipe(debounceTime(1000), distinctUntilChanged())
         .subscribe(query => {
           this.loadData(query);

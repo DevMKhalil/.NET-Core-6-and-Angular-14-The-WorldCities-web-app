@@ -115,6 +115,37 @@ export class CountryEditComponent implements OnInit, OnDestroy {
     this.countrySubscription.unsubscribe();
   }
 
+  //getErrors(
+  //  control: AbstractControl,
+  //  displayName: string,
+  //): string[] {
+  //  var errors: string[] = [];
+  //  Object.keys(control.errors || {}).forEach((key) => {
+  //    switch (key) {
+  //      case 'required':
+  //        errors.push('${displayName} is required.');
+  //        break;
+  //      case 'pattern':
+  //        errors.push('${displayName} contains invalid characters.');
+  //        break;
+  //      case 'isDupeField':
+  //        errors.push('${displayName} already exists: please choose another.'); break;
+  //      default:
+  //        errors.push('${displayName} is invalid.');
+  //        break;
+  //    }
+  //  });
+  //  return errors;
+  //}
+
+    getErrors(
+    control: AbstractControl,
+      displayName: string,
+      customMessages: { [key: string]: string } | null = null
+  ): string[] {
+      return this.countriesService.getErrors(control, displayName, customMessages);
+  }
+
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,

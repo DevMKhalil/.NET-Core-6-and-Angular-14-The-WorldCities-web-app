@@ -3,6 +3,7 @@ import { City } from 'src/app/cities/city';
 import { SharedService } from 'src/app/common/shared.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,14 @@ export class CitiesService {
       .set("name", city.name)
 
     return this.http.get<boolean>(url, { params });
+  }
+
+    getErrors(
+    control: AbstractControl,
+      displayName: string,
+      customMessages: { [key: string]: string } | null = null
+    ): string[] {
+      return this.sharedService.getErrors(control, displayName, customMessages);
   }
 
   constructor(private sharedService: SharedService<City>, private http: HttpClient) { }

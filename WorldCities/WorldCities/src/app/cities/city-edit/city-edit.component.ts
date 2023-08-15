@@ -40,8 +40,8 @@ export class CityEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
-      lat: new FormControl('', Validators.required),
-      lon: new FormControl('', Validators.required),
+      lat: new FormControl('', [Validators.required, Validators.pattern(/^[-]?\d+(\.\d{1,4})?$/)]),
+      lon: new FormControl('', [Validators.required, Validators.pattern(/^[-]?\d+(\.\d{1,4})?$/)]),
       countryId: new FormControl('', Validators.required)
     }, null, this.isDupeCity());
 
@@ -125,6 +125,13 @@ export class CityEditComponent implements OnInit, OnDestroy {
           }, error => console.error(error));
       }
     }
+  }
+
+  getErrors(
+    control: AbstractControl,
+    displayName: string,
+    customMessages: { [key: string]: string } | null = null  ): string[] {
+    return this.countriesService.getErrors(control, displayName, customMessages);
   }
 
   ngOnDestroy(): void {
