@@ -9,6 +9,8 @@ import {AbstractControl } from '@angular/forms';
 })
 export class SharedService<T> {
 
+  urlPrefix: string = 'api/';
+
   getEntityList(
     apiName: string,
     pageIndex: number,
@@ -17,7 +19,7 @@ export class SharedService<T> {
     sortOrder?: string,
     filterColumn?: string,
     filterQuery?: string) {
-    var url = environment.baseUrl + 'api/' + apiName;
+    var url = environment.baseUrl + this.urlPrefix + apiName;
 
     var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
@@ -37,19 +39,19 @@ export class SharedService<T> {
   }
 
   getEntity(apiName: string, id:number) {
-    var url = environment.baseUrl + 'api/' + apiName + '/' + id;
+    var url = environment.baseUrl + this.urlPrefix + apiName + '/' + id;
 
     return this.http.get<T>(url);
   }
 
   putEntity(apiName: string,entity: T) {
-    var url = environment.baseUrl + 'api/' + apiName;
+    var url = environment.baseUrl + this.urlPrefix + apiName;
 
     return this.http.put<T>(url, entity);
   }
 
   postEntity(apiName: string, entity: T) {
-    var url = environment.baseUrl + 'api/' + apiName;
+    var url = environment.baseUrl + this.urlPrefix + apiName;
 
     return this.http.post<T>(url, entity);
   }

@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
 using WorldCitiesAPI.Application.Countries.Queries.Dtos;
 using WorldCitiesAPI.Common.Helper;
@@ -31,8 +32,17 @@ namespace WorldCitiesAPI.Application.Countries.Queries.GetCountries
         public async Task<ApiResult<CountryDto>> Handle(GetCountriesQuery request, CancellationToken cancellationToken)
         {
             var query = _context.Countries
+                .Select(x => new CountryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ISO2 = x.ISO2,
+                    ISO3 = x.ISO3,
+                    TotCities = x.Cities.Count 
+                })
                 .AsNoTracking()
-                .ProjectTo<CountryDto>(_mapper.ConfigurationProvider);
+                //.ProjectTo<CountryDto>(_mapper.ConfigurationProvider)
+                ;
 
             return await ApiResult<CountryDto>
                     .CreateAsync(

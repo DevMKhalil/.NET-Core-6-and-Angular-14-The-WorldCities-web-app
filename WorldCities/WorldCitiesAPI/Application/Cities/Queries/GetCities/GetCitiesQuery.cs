@@ -31,8 +31,18 @@ namespace WorldCitiesAPI.Application.Cities.Queries.GetCities
         public async Task<ApiResult<CityDto>> Handle(GetCitiesQuery request, CancellationToken cancellationToken)
         {
             var query = _context.Cities
+                .Select(x => new CityDto
+                {
+                    Name = x.Name,
+                    CountryId = x.CountryId,
+                    Id = x.Id,
+                    lat = x.Lat,
+                    Lon = x.Lon,
+                    CountryName = x.Country!.Name
+                })
                 .AsNoTracking()
-                .ProjectTo<CityDto>(_mapper.ConfigurationProvider);
+                //.ProjectTo<CityDto>(_mapper.ConfigurationProvider)
+                ;
 
             return await ApiResult<CityDto>
                 .CreateAsync(

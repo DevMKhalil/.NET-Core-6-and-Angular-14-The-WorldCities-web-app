@@ -15,6 +15,7 @@ namespace WorldCitiesAPI.Application.Countries.Queries.Dtos
         public string ISO2 { get; set; }
         [JsonPropertyName("iso3")]
         public string ISO3 { get; set; }
+        public int? TotCities { get; set; } = null!;
 
         public void Mapping(Profile profile)
         {
