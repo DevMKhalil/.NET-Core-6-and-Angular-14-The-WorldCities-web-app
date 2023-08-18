@@ -9,8 +9,8 @@ namespace WorldCitiesAPI.Application.Countries.Queries.IsDuplicatedField
     public class IsDuplicatedFieldQuery : IRequest<bool>
     {
         public int CountryId { get; set; }
-        public string FieldName { get; set; }
-        public string FieldValue { get; set; }
+        public string FieldName { get; set; } = null!;
+        public string FieldValue { get; set; }  = null!;
     }
 
     public class IsDuplicatedFieldQueryHandler : IRequestHandler<IsDuplicatedFieldQuery, bool>

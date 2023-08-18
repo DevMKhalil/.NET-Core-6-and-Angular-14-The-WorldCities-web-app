@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using WorldCitiesAPI.Domain.CityAggregate;
+using WorldCitiesAPI.Resources;
 
 namespace WorldCitiesAPI.Application.Cities.Commands.DeleteCity
 {
@@ -20,7 +21,7 @@ namespace WorldCitiesAPI.Application.Cities.Commands.DeleteCity
         {
             var city = await _context.Cities.FindAsync(request.CityId);
             if (city is null)
-                return Result.Failure<City>("City Not Found");
+                return Result.Failure<City>(Resource.CityNotFound);
 
             _context.Cities.Remove(city);
 

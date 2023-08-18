@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using WorldCitiesAPI.Domain.CountryAggregate;
 using Microsoft.EntityFrameworkCore;
 using CSharpFunctionalExtensions;
+using WorldCitiesAPI.Resources;
 
 namespace WorldCitiesAPI.Domain.CityAggregate
 {
@@ -55,7 +56,7 @@ namespace WorldCitiesAPI.Domain.CityAggregate
         public static Result<City> CreateCity(string name,decimal lat,decimal lon,Maybe<Country> maybeCountry)
         {
             if (maybeCountry.HasNoValue)
-                return Result.Failure<City>("Country Not Found");
+                return Result.Failure<City>(Resource.CountryNotFound);
 
             return Result.Success(new City
             {
@@ -69,7 +70,7 @@ namespace WorldCitiesAPI.Domain.CityAggregate
         public Result<City> UpdateCity(string name, decimal lat, decimal lon, Maybe<Country> maybeCountry)
         {
             if (maybeCountry.HasNoValue)
-                return Result.Failure<City>("Country Not Found");
+                return Result.Failure<City>(Resource.CountryNotFound);
 
             this.Name = name;
             this.Lat = lat;

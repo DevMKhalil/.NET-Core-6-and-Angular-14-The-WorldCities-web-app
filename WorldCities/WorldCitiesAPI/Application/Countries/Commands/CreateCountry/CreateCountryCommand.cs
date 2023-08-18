@@ -10,9 +10,9 @@ namespace WorldCitiesAPI.Application.Countries.Commands.CreateCountry
 {
     public class CreateCountryCommand : IRequest<Result<CountryDto>>
     {
-        public string Name { get; set; }
-        public string ISO2 { get; set; }
-        public string ISO3 { get; set; }
+        public string Name { get; set; } = null!;
+        public string ISO2 { get; set; } = null!;
+        public string ISO3 { get; set; } = null!;
     }
 
     public class CreateCountryCommandHandler : IRequestHandler<CreateCountryCommand, Result<CountryDto>>

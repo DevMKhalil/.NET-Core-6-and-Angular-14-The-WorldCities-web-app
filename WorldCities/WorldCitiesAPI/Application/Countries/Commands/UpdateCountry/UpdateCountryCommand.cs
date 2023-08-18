@@ -6,15 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
 using WorldCitiesAPI.Application.Countries.Queries.Dtos;
 using WorldCitiesAPI.Domain.CountryAggregate;
+using WorldCitiesAPI.Resources;
 
 namespace WorldCitiesAPI.Application.Countries.Commands.UpdateCountry
 {
     public class UpdateCountryCommand : IRequest<Result<CountryDto>>
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string ISO2 { get; set; }
-        public string ISO3 { get; set; }
+        public string Name { get; set; } = null!;
+        public string ISO2 { get; set; } = null!;
+        public string ISO3 { get; set; } = null!;
     }
 
     public class UpdateCountryCommandHandler : IRequestHandler<UpdateCountryCommand, Result<CountryDto>>
@@ -31,7 +32,7 @@ namespace WorldCitiesAPI.Application.Countries.Commands.UpdateCountry
             Maybe<Country> maybeCountry = await _context.Countries.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (maybeCountry.HasNoValue)
-                return Result.Failure<CountryDto>("Country Not Found");
+                return Result.Failure<CountryDto>(Resource.CountryNotFound);
 
             var updateResult = maybeCountry.Value.UpdateCountry(request.Name, request.ISO2, request.ISO3);
 

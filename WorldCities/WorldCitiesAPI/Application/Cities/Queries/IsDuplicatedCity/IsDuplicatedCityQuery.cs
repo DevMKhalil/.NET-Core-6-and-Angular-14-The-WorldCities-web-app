@@ -10,7 +10,7 @@ namespace WorldCitiesAPI.Application.Cities.Queries.IsDuplicatedCity
     public class IsDuplicatedCityQuery : IRequest<bool>
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public decimal Lat { get; set; }
         public decimal Lon { get; set; }
         public int CountryId { get; set; }

@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
 using WorldCitiesAPI.Domain.CityAggregate;
 using WorldCitiesAPI.Domain.CountryAggregate;
+using WorldCitiesAPI.Resources;
 
 namespace WorldCitiesAPI.Application.Cities.Commands.UpdateCity
 {
     public class UpdateCityCommand : IRequest<Result<CityDto>>
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public decimal lat { get; set; }
         public decimal Lon { get; set; }
         public decimal CountryId { get; set; }
@@ -34,7 +35,7 @@ namespace WorldCitiesAPI.Application.Cities.Commands.UpdateCity
             Maybe<City> maybeCity = await _context.Cities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (maybeCity.HasNoValue)
-                return Result.Failure<CityDto>("City Not Found");
+                return Result.Failure<CityDto>(Resource.CityNotFound);
 
             var updateResult = maybeCity.Value.UpdateCity(request.Name, request.lat, request.Lon, maybeCountry);
 

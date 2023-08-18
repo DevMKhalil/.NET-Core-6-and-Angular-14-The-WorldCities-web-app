@@ -7,3 +7,5 @@
 /WorldCities/.vs
 /WorldCities/WorldCitiesAPI/bin/Debug/net6.0
 /WorldCities/WorldCitiesAPI/obj
+/WorldCities/WorldCitiesAPI.Tests/bin/Debug/net6.0
+/WorldCities/WorldCitiesAPI.Tests/obj

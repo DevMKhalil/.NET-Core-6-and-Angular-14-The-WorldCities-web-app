@@ -11,10 +11,10 @@ namespace WorldCitiesAPI.Application.Cities.Commands.CreateCity
 {
     public class CreateCityCommand : IRequest<Result<CityDto>>
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public decimal lat { get; set; }
         public decimal Lon { get; set; }
-        public decimal CountryId { get; set; }
+        public int CountryId { get; set; }
     }
 
     public class CreateCityCommandHandler : IRequestHandler<CreateCityCommand, Result<CityDto>>

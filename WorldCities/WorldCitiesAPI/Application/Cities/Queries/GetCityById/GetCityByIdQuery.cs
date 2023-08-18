@@ -4,6 +4,7 @@ using CSharpFunctionalExtensions.ValueTasks;
 using MediatR;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
 using WorldCitiesAPI.Domain.CityAggregate;
+using WorldCitiesAPI.Resources;
 
 namespace WorldCitiesAPI.Application.Cities.Queries.GetCityById
 {
@@ -26,7 +27,7 @@ namespace WorldCitiesAPI.Application.Cities.Queries.GetCityById
             var city = await _context.Cities.FindAsync(request.CityId);
 
             if (city is null)
-                return Result.Failure<CityDto>("City Not Found");
+                return Result.Failure<CityDto>(Resource.CityNotFound);
 
             return _mapper.Map<City, CityDto>(city);
         }
