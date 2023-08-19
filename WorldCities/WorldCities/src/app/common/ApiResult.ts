@@ -1,7 +1,7 @@
 export interface ApiResult<T> {
   data: T[];
   pageIndex: number;
-  pageSize: string;
+  pageSize: number;
   totalCount: number;
   totalPages: number;
   hasPreviousPage: boolean;
