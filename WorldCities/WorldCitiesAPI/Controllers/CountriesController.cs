@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using WorldCitiesAPI.Application.Cities.Commands.CreateCity;
 using WorldCitiesAPI.Application.Cities.Commands.DeleteCity;
 using WorldCitiesAPI.Application.Cities.Commands.UpdateCity;
@@ -16,7 +18,7 @@ using WorldCitiesAPI.Application.Countries.Queries.Dtos;
 using WorldCitiesAPI.Application.Countries.Queries.GetCountries;
 using WorldCitiesAPI.Application.Countries.Queries.GetCountryById;
 using WorldCitiesAPI.Application.Countries.Queries.IsDuplicatedField;
-using WorldCitiesAPI.Data;
+using WorldCitiesAPI.Common;
 using WorldCitiesAPI.Domain.CityAggregate;
 using WorldCitiesAPI.Domain.CountryAggregate;
 
@@ -57,6 +59,7 @@ namespace WorldCitiesAPI.Controllers
         // PUT: api/Countries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut]
+        [Authorize(Roles = "RegisteredUser")]
         public async Task<IActionResult> PutCountry(CountryDto country)
         {
             var putResult = await _mediator.Send(new UpdateCountryCommand
@@ -76,6 +79,7 @@ namespace WorldCitiesAPI.Controllers
         // POST: api/Countries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "RegisteredUser")]
         public async Task<ActionResult<CountryDto>> PostCountry(CountryDto country)
         {
             var postResult = await _mediator.Send(new CreateCountryCommand
@@ -93,6 +97,7 @@ namespace WorldCitiesAPI.Controllers
 
         // DELETE: api/Countries/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteCountry(int id)
         {
             var deleteResult = await _mediator.Send(new DeleteCountryCommand { CountryId = id });

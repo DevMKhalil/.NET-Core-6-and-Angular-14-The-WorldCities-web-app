@@ -103,4 +103,10 @@
   <data name="CityNotFound" xml:space="preserve">
     <value>City Not Found</value>
   </data>
+  <data name="InvalidEmailOrPassword" xml:space="preserve">
+    <value>Invalid Email or Password.</value>
+  </data>
+  <data name="LoginSuccessful" xml:space="preserve">
+    <value>Login successful</value>
+  </data>
 </root>

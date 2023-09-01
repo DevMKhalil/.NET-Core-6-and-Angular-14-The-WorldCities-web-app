@@ -2,6 +2,7 @@ using MediatR;
 using OfficeOpenXml;
 using System.Reflection;
 using WorldCitiesAPI;
+using WorldCitiesAPI.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddContext(builder.Configuration);
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddScoped<JwtHandler>();
 
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -34,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

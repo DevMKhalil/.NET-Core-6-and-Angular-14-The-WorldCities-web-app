@@ -2,12 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using WorldCitiesAPI.Application;
+using WorldCitiesAPI.Domain.ApplicationUser;
 using WorldCitiesAPI.Domain.CityAggregate;
 using WorldCitiesAPI.Domain.CountryAggregate;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WorldCitiesAPI.Data
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public ApplicationDbContext() : base(){ }
 

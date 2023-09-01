@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 
-namespace WorldCitiesAPI.Data
+namespace WorldCitiesAPI.Common
 {
     public class ApiResult<T>
     {
@@ -63,7 +63,7 @@ namespace WorldCitiesAPI.Data
             string? filterColumn = null,
             string? filterQuery = null)
         {
-            if (!string.IsNullOrEmpty(filterColumn) 
+            if (!string.IsNullOrEmpty(filterColumn)
                 && !string.IsNullOrEmpty(filterQuery)
                 && IsValidProperty(filterColumn))
             {
@@ -76,7 +76,7 @@ namespace WorldCitiesAPI.Data
 
             if (!string.IsNullOrEmpty(sortColumn) && IsValidProperty(sortColumn))
             {
-                sortOrder = 
+                sortOrder =
                     !string.IsNullOrEmpty(sortOrder) && sortOrder.ToUpper() == "ASC" ? "ASC" : "DESC";
 
                 source = source.OrderBy($"{sortColumn} {sortOrder}");
@@ -91,8 +91,8 @@ namespace WorldCitiesAPI.Data
                             pageIndex,
                             pageSize,
                             sortColumn,
-                            sortOrder, 
-                            filterColumn, 
+                            sortOrder,
+                            filterColumn,
                             filterQuery);
         }
         #endregion
@@ -150,7 +150,7 @@ namespace WorldCitiesAPI.Data
         /// TRUE if the current page has a next page, FALSE otherwise. 
         /// </summary>
 
-        public bool HasNextPage => ((PageIndex + 1) < TotalPages);
+        public bool HasNextPage => PageIndex + 1 < TotalPages;
 
         /// <summary>
         /// Sorting Column name (or null if none set)

@@ -3,8 +3,8 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
+using WorldCitiesAPI.Common;
 using WorldCitiesAPI.Common.Helper;
-using WorldCitiesAPI.Data;
 using WorldCitiesAPI.Domain.CityAggregate;
 
 namespace WorldCitiesAPI.Application.Cities.Queries.GetCities

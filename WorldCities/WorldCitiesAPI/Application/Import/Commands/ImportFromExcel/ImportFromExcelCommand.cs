@@ -1,10 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using CSharpFunctionalExtensions.ValueTasks;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System.Security;
+using WorldCitiesAPI.Domain.ApplicationUser;
 using WorldCitiesAPI.Domain.CityAggregate;
 using WorldCitiesAPI.Domain.CountryAggregate;
 
@@ -52,6 +54,7 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
             var countriesByName = _context.Countries
             .AsNoTracking()
             .ToDictionary(x => x.Name, StringComparer.OrdinalIgnoreCase);
+
             // iterates through all rows, skipping the first one
             for (int nRow = 2; nRow <= nEndRow; nRow++)
             {
@@ -63,14 +66,8 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
                 // skip this country if it already exists in the database
                 if (countriesByName.ContainsKey(countryName))
                     continue;
-                // create the Country entity and fill it with xlsx data
-                //var country = new Country
-                //{
-                //    Name = countryName,
-                //    ISO2 = iso2,
-                //    ISO3 = iso3
-                //};
 
+                // create the Country entity and fill it with xlsx data
                 var countryResult = Country.CreateCountry(
                     countryName,
                     iso2,
@@ -78,13 +75,17 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
 
                 if (countryResult.IsFailure)
                     return Result.Failure<ImportResult>(countryResult.Error);
+
                 // add the new country to the DB context
                 await _context.Countries.AddAsync(countryResult.Value);
+
                 // store the country in our lookup to retrieve its Id later on
                 countriesByName.Add(countryName, countryResult.Value);
+
                 // increment the counter
                 numberOfCountriesAdded++;
             }
+
             // save all the countries into the Database
             if (numberOfCountriesAdded > 0)
             {
@@ -93,6 +94,7 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
                 if (saveResult.IsFailure)
                     return Result.Failure<ImportResult>(saveResult.Error);
             }
+
             // create a lookup dictionary
             // containing all the cities already existing
             // into the Database (it will be empty on first run).
@@ -103,6 +105,7 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
             Lat: x.Lat,
             Lon: x.Lon,
             CountryId: x.CountryId));
+
             // iterates through all rows, skipping the first one
             for (int nRow = 2; nRow <= nEndRow; nRow++)
             {
@@ -113,9 +116,11 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
                 var lat = row[nRow, 3].GetValue<decimal>();
                 var lon = row[nRow, 4].GetValue<decimal>();
                 var countryName = row[nRow, 5].GetValue<string>();
+
                 // retrieve country Id by countryName
                 var countryId = countriesByName[countryName].Id;
                 var country = countriesByName[countryName];
+
                 // skip this city if it already exists in the database
                 if (cities.ContainsKey((
                         Name: name,
@@ -123,15 +128,8 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
                         Lon: lon,
                         CountryId: countryId)))
                     continue;
-                // create the City entity and fill it with xlsx data
-                //var city = new City
-                //{
-                //    Name = name,
-                //    Lat = lat,
-                //    Lon = lon,
-                //    CountryId = countryId
-                //};
 
+                // create the City entity and fill it with xlsx data
                 var cityResult = City.CreateCity(
                     name,
                     lat,
@@ -140,11 +138,14 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
 
                 if (cityResult.IsFailure)
                     return Result.Failure<ImportResult>(cityResult.Error);
+
                 // add the new city to the DB context
                 _context.Cities.Add(cityResult.Value);
+
                 // increment the counter
                 numberOfCitiesAdded++;
             }
+
             // save all the cities into the Database
             if (numberOfCitiesAdded > 0)
             {
@@ -155,11 +156,6 @@ namespace WorldCitiesAPI.Application.Import.Commands.ImportFromExcel
             }
 
             return Result.Success(new ImportResult(numberOfCitiesAdded, numberOfCountriesAdded));
-            //return new JsonResult(new
-            //{
-            //    Cities = numberOfCitiesAdded,
-            //    Countries = numberOfCountriesAdded
-            //});
         }
     }
 }

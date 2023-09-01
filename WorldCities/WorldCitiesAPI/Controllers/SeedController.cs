@@ -1,25 +1,21 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WorldCitiesAPI.Application;
+using System.Data;
+using WorldCitiesAPI.Application.Accounts.Commands.CreateDefaultUsers;
 using WorldCitiesAPI.Application.Import.Commands.ImportFromExcel;
 
 namespace WorldCitiesAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Roles = "Administrator")]
     public class SeedController : ControllerBase
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IWebHostEnvironment _env;
         private readonly IMediator _mediator;
 
-        public SeedController(
-            IApplicationDbContext dbContext,
-            IWebHostEnvironment env,
-            IMediator mediator)
+        public SeedController(IMediator mediator)
         {
-            _context = dbContext;
-            _env = env;
             _mediator = mediator;
         }
         [HttpGet]
@@ -34,6 +30,21 @@ namespace WorldCitiesAPI.Controllers
             {
                 Cities = result.Value.numberOfCitiesAdded,
                 Countries = result.Value.numberOfCountriesAdded
+            });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> CreateDefaultUsers()
+        {
+            var result = await _mediator.Send(new CreateDefaultUsersCommand());
+
+            if (result.IsFailure)
+                return BadRequest(result.Error);
+
+            return new JsonResult(new
+            {
+                Count = result.Value.Count,
+                Users = result.Value
             });
         }
     }

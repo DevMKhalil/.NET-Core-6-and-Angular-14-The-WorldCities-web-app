@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
-using WorldCitiesAPI.Data;
+using WorldCitiesAPI.Common;
 using WorldCitiesAPI.Domain.CountryAggregate;
 
 namespace WorldCitiesAPI.Application.Countries.Queries.IsDuplicatedField

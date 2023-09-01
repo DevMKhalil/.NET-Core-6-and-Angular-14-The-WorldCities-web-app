@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using WorldCitiesAPI.Application.Cities.Queries.Dtos;
 using WorldCitiesAPI.Application.Countries.Queries.Dtos;
+using WorldCitiesAPI.Common;
 using WorldCitiesAPI.Common.Helper;
-using WorldCitiesAPI.Data;
 
 namespace WorldCitiesAPI.Application.Countries.Queries.GetCountries
 {
