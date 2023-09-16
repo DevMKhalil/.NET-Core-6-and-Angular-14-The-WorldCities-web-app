@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,12 +16,14 @@ const routes: Routes = [
   ,
   {
     path: 'city/:id',
-    loadComponent: () => import('src/app/cities/city-edit/city-edit.component').then(mod => mod.CityEditComponent)
+    loadComponent: () => import('src/app/cities/city-edit/city-edit.component').then(mod => mod.CityEditComponent),
+    canActivate: [AuthGuard]
   }
   ,
   {
     path: 'city',
-    loadComponent: () => import('src/app/cities/city-edit/city-edit.component').then(mod => mod.CityEditComponent)
+    loadComponent: () => import('src/app/cities/city-edit/city-edit.component').then(mod => mod.CityEditComponent),
+    canActivate: [AuthGuard]
   }
   ,
   {
@@ -30,12 +33,19 @@ const routes: Routes = [
   ,
   {
     path: 'country/:id',
-    loadComponent: () => import('src/app/countries/country-edit/country-edit.component').then(mod => mod.CountryEditComponent)
+    loadComponent: () => import('src/app/countries/country-edit/country-edit.component').then(mod => mod.CountryEditComponent),
+    canActivate: [AuthGuard]
   }
   ,
   {
     path: 'country',
-    loadComponent: () => import('src/app/countries/country-edit/country-edit.component').then(mod => mod.CountryEditComponent)
+    loadComponent: () => import('src/app/countries/country-edit/country-edit.component').then(mod => mod.CountryEditComponent),
+    canActivate: [AuthGuard]
+  }
+  ,
+  {
+    path: 'login',
+    loadComponent: () => import('src/app/auth/login/login.component').then(mod => mod.LoginComponent)
   }
 ];
 

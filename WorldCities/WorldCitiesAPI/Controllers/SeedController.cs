@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using WorldCitiesAPI.Application.Accounts.Commands.CreateDefaultUsers;
 using WorldCitiesAPI.Application.Import.Commands.ImportFromExcel;
 

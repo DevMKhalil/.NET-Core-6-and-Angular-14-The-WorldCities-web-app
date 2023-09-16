@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WorldCitiesAPI.Application.Accounts.Queries.Login;
+using WorldCitiesAPI.Common;
 
 namespace WorldCitiesAPI.Controllers
 {
@@ -15,8 +16,8 @@ namespace WorldCitiesAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginQuery loginQuery)
+        [HttpGet("Login")]
+        public async Task<ActionResult<LoginResult>> Login([FromQuery]LoginQuery loginQuery)
         {
             var result = await _mediator.Send(loginQuery);
 

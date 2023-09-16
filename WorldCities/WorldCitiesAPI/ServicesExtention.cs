@@ -52,12 +52,12 @@ namespace WorldCitiesAPI
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     RequireExpirationTime = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
                     ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
                     ValidIssuer = configration["JwtSettings:Issuer"],
+                    ValidateAudience = true,
                     ValidAudience = configration["JwtSettings:Audience"],
+                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configration["JwtSettings:SecurityKey"]))
                 };
             });
