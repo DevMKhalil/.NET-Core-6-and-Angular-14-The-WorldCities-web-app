@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using WorldCitiesAPI.Domain.ApplicationUser;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Cors;
 
 namespace WorldCitiesAPI
 {
@@ -12,6 +13,36 @@ namespace WorldCitiesAPI
     {
         public static void AddContext(this IServiceCollection services, IConfiguration configration)
         {
+            //add Swagger with authentication JWT
+            services.AddSwaggerGen(
+                c =>
+                {
+                    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                    {
+                        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                        Description = "Please Insert Token",
+                        Name = "Authorization",
+                        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                        BearerFormat = "JWT",
+                        Scheme = "bearer"
+                    });
+                    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+                {
+                    {
+                        new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                        {
+                            Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                            {
+                                Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{ }
+                    }
+                });
+                }
+            );
+
             ILoggerFactory ConsolLoggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
@@ -61,6 +92,14 @@ namespace WorldCitiesAPI
                     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configration["JwtSettings:SecurityKey"]))
                 };
             });
+
+            services.AddCors(options =>
+                options.AddPolicy(name: "AngularPolicy",
+                    cfg => {
+                        cfg.AllowAnyHeader();
+                        cfg.AllowAnyMethod();
+                        cfg.WithOrigins(configration["AllowedCORS"]);
+                    }));
 
             services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
         }
